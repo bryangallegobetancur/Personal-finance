@@ -25,7 +25,7 @@ export default {
         primary: {
           DEFAULT: "var(--color-primary)",
           hover: "var(--color-primary-hover)",
-          foreground: "#FFFFFF",
+          foreground: "var(--color-primary-text)",
         },
         success: "#16A34A",
         error: "#DC2626",

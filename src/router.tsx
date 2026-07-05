@@ -3,6 +3,7 @@ import { AuthLayout } from "@/components/layout/AuthLayout";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
 import { PublicRoute } from "@/routes/PublicRoute";
+import { ExploreRoute } from "@/routes/ExploreRoute";
 import { LoginPage } from "@/pages/LoginPage";
 import { RegisterPage } from "@/pages/RegisterPage";
 import { ForgotPasswordPage } from "@/pages/ForgotPasswordPage";
@@ -35,6 +36,21 @@ export const router = createBrowserRouter([
           { path: "/dashboard", element: <DashboardPage /> },
           { path: "/transactions", element: <TransactionsPage /> },
           { path: "/settings", element: <SettingsPage /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/explore",
+    element: <ExploreRoute />,
+    children: [
+      {
+        element: <AppLayout />,
+        children: [
+          { path: "dashboard", element: <DashboardPage /> },
+          { path: "transactions", element: <TransactionsPage /> },
+          { path: "settings", element: <SettingsPage /> },
+          { index: true, element: <Navigate to="/explore/dashboard" replace /> },
         ],
       },
     ],

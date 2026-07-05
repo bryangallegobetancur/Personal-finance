@@ -2,14 +2,27 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import { emitRefetch } from "@/lib/utils";
+import {
+  useExploreContext,
+  exploreCreateCategory,
+  exploreUpdateCategory,
+  exploreDeleteCategory,
+} from "@/contexts/ExploreContext";
 import type { CategoryInput } from "@/schemas/category.schema";
 
 export function useCreateCategory() {
+  const explore = useExploreContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const mutateAsync = async (input: CategoryInput) => {
     setIsLoading(true);
     try {
+      if (explore) {
+        const result = exploreCreateCategory(explore, input);
+        toast.success("Categoría creada (modo exploración)");
+        return result;
+      }
+
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -35,11 +48,21 @@ export function useCreateCategory() {
 }
 
 export function useUpdateCategory() {
+  const explore = useExploreContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  const mutateAsync = async ({ id, ...input }: CategoryInput & { id: string }) => {
+  const mutateAsync = async ({
+    id,
+    ...input
+  }: CategoryInput & { id: string }) => {
     setIsLoading(true);
     try {
+      if (explore) {
+        const result = exploreUpdateCategory(explore, id, input);
+        toast.success("Categoría actualizada (modo exploración)");
+        return result;
+      }
+
       const { data, error } = await supabase
         .from("categories")
         .update(input)
@@ -62,12 +85,22 @@ export function useUpdateCategory() {
 }
 
 export function useDeleteCategory() {
+  const explore = useExploreContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const mutateAsync = async (id: string) => {
     setIsLoading(true);
     try {
-      const { error } = await supabase.from("categories").delete().eq("id", id);
+      if (explore) {
+        exploreDeleteCategory(explore, id);
+        toast.success("Categoría eliminada (modo exploración)");
+        return;
+      }
+
+      const { error } = await supabase
+        .from("categories")
+        .delete()
+        .eq("id", id);
       if (error) throw error;
       emitRefetch("categories:changed");
       toast.success("Categoría eliminada");

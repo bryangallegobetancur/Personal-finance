@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { onRefetch } from "@/lib/utils";
+import { useExploreContext } from "@/contexts/ExploreContext";
 import type { CategoryType } from "@/types/database.types";
 
 type CategoryRow = {
@@ -12,11 +13,29 @@ type CategoryRow = {
 };
 
 export function useCategories(type?: CategoryType) {
+  const explore = useExploreContext();
+
   const [data, setData] = useState<CategoryRow[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!explore);
   const [error, setError] = useState<Error | null>(null);
 
   const fetch = useCallback(async () => {
+    if (explore) {
+      setIsLoading(true);
+      setError(null);
+      try {
+        let filtered = [...explore.categories];
+        if (type) filtered = filtered.filter((c) => c.type === type);
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+        setData(filtered);
+      } catch (e) {
+        setError(e instanceof Error ? e : new Error(String(e)));
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     try {
@@ -30,16 +49,17 @@ export function useCategories(type?: CategoryType) {
     } finally {
       setIsLoading(false);
     }
-  }, [type]);
+  }, [type, explore]);
 
   useEffect(() => {
     fetch();
   }, [fetch]);
 
   useEffect(() => {
+    if (explore) return;
     const unsub = onRefetch("categories:changed", fetch);
     return unsub;
-  }, [fetch]);
+  }, [fetch, explore]);
 
   return { data, isLoading, error, refetch: fetch };
 }

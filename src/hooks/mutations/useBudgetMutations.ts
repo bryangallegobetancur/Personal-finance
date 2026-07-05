@@ -2,14 +2,27 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import { emitRefetch } from "@/lib/utils";
+import {
+  useExploreContext,
+  exploreCreateBudget,
+  exploreUpdateBudget,
+  exploreDeleteBudget,
+} from "@/contexts/ExploreContext";
 import type { BudgetInput } from "@/schemas/budget.schema";
 
 export function useCreateBudget() {
+  const explore = useExploreContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const mutateAsync = async (input: BudgetInput) => {
     setIsLoading(true);
     try {
+      if (explore) {
+        const result = exploreCreateBudget(explore, input);
+        toast.success("Tope creado (modo exploración)");
+        return result;
+      }
+
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -35,11 +48,21 @@ export function useCreateBudget() {
 }
 
 export function useUpdateBudget() {
+  const explore = useExploreContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  const mutateAsync = async ({ id, ...input }: BudgetInput & { id: string }) => {
+  const mutateAsync = async ({
+    id,
+    ...input
+  }: BudgetInput & { id: string }) => {
     setIsLoading(true);
     try {
+      if (explore) {
+        const result = exploreUpdateBudget(explore, id, input);
+        toast.success("Tope actualizado (modo exploración)");
+        return result;
+      }
+
       const { data, error } = await supabase
         .from("budgets")
         .update(input)
@@ -62,12 +85,22 @@ export function useUpdateBudget() {
 }
 
 export function useDeleteBudget() {
+  const explore = useExploreContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const mutateAsync = async (id: string) => {
     setIsLoading(true);
     try {
-      const { error } = await supabase.from("budgets").delete().eq("id", id);
+      if (explore) {
+        exploreDeleteBudget(explore, id);
+        toast.success("Tope eliminado (modo exploración)");
+        return;
+      }
+
+      const { error } = await supabase
+        .from("budgets")
+        .delete()
+        .eq("id", id);
       if (error) throw error;
       emitRefetch("budgets:changed");
       toast.success("Tope eliminado");

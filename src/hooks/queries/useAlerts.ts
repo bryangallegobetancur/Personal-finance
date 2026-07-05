@@ -3,15 +3,31 @@ import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import { formatCurrency, onRefetch, emitRefetch } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { useExploreContext } from "@/contexts/ExploreContext";
 import type { Alert } from "@/types/database.types";
 
 export function useAlerts() {
   const { user } = useAuth();
+  const explore = useExploreContext();
+
   const [data, setData] = useState<Alert[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!explore);
   const [error, setError] = useState<Error | null>(null);
 
   const fetch = useCallback(async () => {
+    if (explore) {
+      setIsLoading(true);
+      setError(null);
+      try {
+        setData(explore.alerts);
+      } catch (e) {
+        setError(e instanceof Error ? e : new Error(String(e)));
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     try {
@@ -27,18 +43,24 @@ export function useAlerts() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [explore]);
 
   useEffect(() => {
     fetch();
   }, [fetch]);
 
   useEffect(() => {
-    const unsub = onRefetch("alerts:changed", fetch);
-    return unsub;
-  }, [fetch]);
+    if (explore) return;
+    const unsubAlerts = onRefetch("alerts:changed", fetch);
+    const unsubBudgets = onRefetch("budgets:changed", fetch);
+    return () => {
+      unsubAlerts();
+      unsubBudgets();
+    };
+  }, [fetch, explore]);
 
   useEffect(() => {
+    if (explore) return;
     if (!user) return;
 
     const channel = supabase
@@ -62,12 +84,24 @@ export function useAlerts() {
           });
         }
       )
+      .on(
+        "postgres_changes",
+        {
+          event: "DELETE",
+          schema: "public",
+          table: "alerts_history",
+          filter: `user_id=eq.${user.id}`,
+        },
+        () => {
+          emitRefetch("alerts:changed");
+        }
+      )
       .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [user]);
+  }, [user, explore]);
 
   return { data, isLoading, error, refetch: fetch };
 }
