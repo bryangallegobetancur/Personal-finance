@@ -49,19 +49,17 @@ export function TransactionsList() {
           </Button>
         }
       >
-        {isLoading && (
+        {isLoading ? (
           <div className="grid place-items-center py-12">
             <Spinner />
           </div>
-        )}
-        {error && <p className="text-small text-error">Error al cargar</p>}
-        {data && data.length === 0 && (
+        ) : error ? (
+          <p className="text-small text-error">Error al cargar</p>
+        ) : data.length === 0 ? (
           <p className="py-12 text-center text-small text-muted-foreground">
             Aún no hay transacciones. Crea la primera.
           </p>
-        )}
-
-        {data && data.length > 0 && (
+        ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-small">
               <thead>

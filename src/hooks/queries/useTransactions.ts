@@ -118,6 +118,7 @@ export function useTransactions(filters: TransactionFilters = {}) {
 
   useEffect(() => {
     if (explore) return;
+    fetch();
     const unsub = onRefetch("transactions:changed", fetch);
     return unsub;
   }, [fetch, explore]);
