@@ -42,7 +42,7 @@ export function AppLayout() {
   };
 
   const logoGlow = isDark
-    ? "drop-shadow-[0_0_8px_rgba(255,255,255,0.85)]"
+    ? "drop-shadow-[0_0_4px_rgba(0,0,0,1.0)]"
     : "";
 
   return (
