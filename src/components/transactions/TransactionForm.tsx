@@ -95,6 +95,7 @@ export function TransactionForm({ initial, onSubmit, onCancel, submitting }: Pro
       <Select
         label="Categoría"
         hint="Opcional — las transacciones pueden no tener categoría"
+        className="category-select"
         {...register("category_id")}
       >
         <option value="">Sin categoría</option>

@@ -146,6 +146,12 @@
   .v5 select {
     border-color: transparent;
   }
+
+  /* Dropdown nativo: letra negra en modo oscuro */
+  .dark .category-select option {
+    color: #000;
+    background: #fff;
+  }
 }
 
 /* --------------------------------------------------------------------- */
