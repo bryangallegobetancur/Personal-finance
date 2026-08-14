@@ -32,7 +32,7 @@ export function IncomeExpenseChart({ data, monthLabel, isDateLabel = true }: Pro
             <CartesianGrid
               strokeDasharray="3 3"
               vertical={false}
-              stroke="var(--color-border)"
+              stroke="var(--border)"
             />
             <XAxis
               dataKey="label"
@@ -42,12 +42,12 @@ export function IncomeExpenseChart({ data, monthLabel, isDateLabel = true }: Pro
               textAnchor={isDateLabel ? "end" : undefined}
               height={isDateLabel ? 30 : 60}
               fontSize={12}
-              stroke="var(--color-text-secondary)"
+              stroke="var(--muted-foreground)"
             />
             <YAxis
               tickFormatter={(v: number) => formatCurrency(v)}
               fontSize={12}
-              stroke="var(--color-text-secondary)"
+              stroke="var(--muted-foreground)"
               width={70}
             />
             <Tooltip
@@ -56,18 +56,18 @@ export function IncomeExpenseChart({ data, monthLabel, isDateLabel = true }: Pro
               contentStyle={{
                 borderRadius: 12,
                 fontSize: 12,
-                backgroundColor: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                color: "var(--color-text)",
+                backgroundColor: "var(--surface)",
+                border: "1px solid var(--border)",
+                color: "var(--foreground)",
               }}
-              labelStyle={{ color: "var(--color-text)" }}
-              itemStyle={{ color: "var(--color-text)" }}
+              labelStyle={{ color: "var(--foreground)" }}
+              itemStyle={{ color: "var(--foreground)" }}
             />
             <Legend
-              wrapperStyle={{ fontSize: 12, color: "var(--color-text-secondary)" }}
+              wrapperStyle={{ fontSize: 12, color: "var(--muted-foreground)" }}
             />
-            <Bar dataKey="ingresos" name="Ingresos" fill="#16A34A" radius={[6, 6, 0, 0]} />
-            <Bar dataKey="gastos" name="Gastos" fill="#DC2626" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="ingresos" name="Ingresos" fill="var(--success)" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="gastos" name="Gastos" fill="var(--error)" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -4,52 +4,109 @@
 
 @layer base {
   :root {
-    --color-primary: #1f6f5f;
-    --color-primary-hover: #18594c;
-    --color-primary-text: #ffffff;
-    --color-bg: #e9edf3;
-    --color-surface: #ffffff;
-    --color-text: #111827;
-    --color-text-secondary: #6b7280;
-    --color-border: #e5e7eb;
-    background: linear-gradient(135deg, #e9edf3, #646e85);
-    background-attachment: fixed;
+    /* Tokens semánticos por defecto (tema claro neutro) */
+    --background: #e9edf3;
+    --surface: #ffffff;
+    --surface-2: #f1f4f8;
+    --foreground: #111827;
+    --muted-foreground: #6b7280;
+    --border: #e5e7eb;
+    --primary: #1f6f5f;
+    --primary-hover: #18594c;
+    --primary-foreground: #ffffff;
+    --accent: #e8f3f0;
+    --glow: rgb(31 111 95 / 0.25);
+    --ring-soft: rgb(31 111 95 / 0.35);
+    --success: #16a34a;
+    --error: #dc2626;
+    --page: linear-gradient(135deg, #e9edf3 0%, #dfe8f5 100%);
   }
 
-  .dark {
-    --color-primary: #1f6f5f;
-    --color-primary-hover: #2a8a75;
-    --color-primary-text: #ffffff;
-    --color-bg: #0f172a;
-    --color-surface: #161f2f;
-    --color-text: #f8fafc;
-    --color-text-secondary: #94a3b8;
-    --color-border: #2b3648;
-    background: linear-gradient(135deg, #0f172a, #000918);
-    background-attachment: fixed;
+  /* ------------------------------------------------------------------ */
+  /* Tema claro · 03 Vidrio (glassmorphism)                            */
+  /* ------------------------------------------------------------------ */
+  .v3 {
+    --background: #dfe8f5;
+    --surface: rgb(255 255 255 / 0.6);
+    --surface-2: rgb(255 255 255 / 0.35);
+    --foreground: #10203a;
+    --muted-foreground: #536880;
+    --border: rgb(255 255 255 / 0.55);
+    --primary: #2a7d6b;
+    --primary-hover: #1f6f5f;
+    --primary-foreground: #ffffff;
+    --accent: rgb(255 255 255 / 0.5);
+    --glow: rgb(42 125 107 / 0.3);
+    --ring-soft: rgb(255 255 255 / 0.5);
+    --page: linear-gradient(135deg, #dff0ea 0%, #cfe0f2 45%, #e7dcf3 100%);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Tema claro · 05 Menta (minimal, sin tarjetas)                     */
+  /* ------------------------------------------------------------------ */
+  .v5 {
+    --background: #f2f8f5;
+    --surface: #f2f8f5;
+    --surface-2: #e6f1eb;
+    --foreground: #12201b;
+    --muted-foreground: #5f7a70;
+    --border: #d3e6dd;
+    --primary: #2a7d6b;
+    --primary-hover: #1f6f5f;
+    --primary-foreground: #ffffff;
+    --accent: #e8f3f0;
+    --glow: rgb(42 125 107 / 0.22);
+    --ring-soft: rgb(42 125 107 / 0.12);
+    --page: radial-gradient(120% 90% at 50% 0%, #ffffff 0%, #eaf5f0 55%, #d9ece4 100%);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Tema oscuro · 07 Aurora (vidrio oscuro, blobs animados)           */
+  /* ------------------------------------------------------------------ */
+  .v7 {
+    --background: #12101f;
+    --surface: rgb(255 255 255 / 0.07);
+    --surface-2: rgb(255 255 255 / 0.05);
+    --foreground: #f6f4ff;
+    --muted-foreground: rgb(246 244 255 / 0.68);
+    --border: rgb(255 255 255 / 0.18);
+    --primary: #ffffff;
+    --primary-hover: #e6e2f7;
+    --primary-foreground: #221a3a;
+    --accent: rgb(255 255 255 / 0.1);
+    --glow: rgb(158 122 255 / 0.5);
+    --ring-soft: rgb(255 255 255 / 0.25);
+    --success: #4ade80;
+    --error: #f87171;
+    --page: #12101f;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Tema oscuro · 10 Profundo (azul marino, acento cian)              */
+  /* ------------------------------------------------------------------ */
+  .v10 {
+    --background: #071a2b;
+    --surface: #0c2437;
+    --surface-2: #113046;
+    --foreground: #eaf6ff;
+    --muted-foreground: #8bb0c8;
+    --border: #1a4058;
+    --primary: #3fd0c9;
+    --primary-hover: #63e2db;
+    --primary-foreground: #04191c;
+    --accent: rgb(63 208 201 / 0.12);
+    --glow: rgb(63 208 201 / 0.4);
+    --ring-soft: rgb(63 208 201 / 0.22);
+    --page: linear-gradient(160deg, #0a2740 0%, #071a2b 55%, #030d16 100%);
   }
 
   html {
+    background: var(--page) fixed center / cover;
     -webkit-text-size-adjust: 100%;
   }
 
-  .theme-aurora {
-    --color-primary: oklch(1 0 0);
-    --color-primary-hover: oklch(0.92 0.01 270);
-    --color-primary-text: oklch(84.967% 0.07387 267.043);
-    --color-bg: oklch(0.15 0.02 270);
-    --color-surface: oklch(0.20 0.025 270);
-    --color-text: oklch(0% 0 0);
-    --color-text-secondary: oklch(0.98 0 0 / 0.70);
-    --color-border: oklch(1 0 0 / 0.20);
-
-    --aurora-fuchsia: oklch(0.70 0.25 340);
-    --aurora-indigo: oklch(0.55 0.22 270);
-    --aurora-cyan: oklch(0.80 0.15 220);
-  }
-
   * {
-    border-color: var(--color-border);
+    border-color: var(--border);
   }
 
   body {
@@ -59,15 +116,48 @@
   }
 
   ::selection {
-    background-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+    background-color: color-mix(in srgb, var(--primary) 25%, transparent);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--ring-soft);
     outline-offset: 2px;
   }
 }
 
+/* --------------------------------------------------------------------- */
+/* Ajustes por tema (solo clases semánticas en componentes; estos        */
+/* overrides son el "skin" que cambia según la clase raíz del tema).     */
+/* --------------------------------------------------------------------- */
+@layer components {
+  /* Vidrio y Aurora: tarjeta principal más redondeada */
+  .v3 .rounded-card,
+  .v7 .rounded-card {
+    border-radius: 28px;
+  }
+
+  /* Menta: inputs y botones en forma de píldora */
+  .v5 input,
+  .v5 select,
+  .v5 button {
+    border-radius: 9999px;
+  }
+  .v5 input,
+  .v5 select {
+    border-color: transparent;
+  }
+}
+
+/* --------------------------------------------------------------------- */
+/* Fondo de página (gradiente por tema)                                  */
+/* --------------------------------------------------------------------- */
+.page-bg {
+  background: var(--page) fixed center / cover;
+}
+
+/* --------------------------------------------------------------------- */
+/* Animaciones aurora                                                    */
+/* --------------------------------------------------------------------- */
 @keyframes aurora-fuchsia {
   0%, 100% { opacity: 0.30; transform: translate(0, 0) scale(1); }
   33% { opacity: 0.40; transform: translate(20px, -10px) scale(1.05); }

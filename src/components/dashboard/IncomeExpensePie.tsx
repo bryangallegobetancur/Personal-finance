@@ -16,7 +16,7 @@ interface Props {
   monthLabel: string;
 }
 
-const COLORS = { ingresos: "#16A34A", gastos: "#DC2626" };
+const COLORS = { ingresos: "var(--success)", gastos: "var(--error)" };
 
 export function IncomeExpensePie({ income, expense, balance, monthLabel }: Props) {
   const data = [
@@ -48,21 +48,21 @@ export function IncomeExpensePie({ income, expense, balance, monthLabel }: Props
               contentStyle={{
                 borderRadius: 12,
                 fontSize: 12,
-                backgroundColor: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
-                color: "var(--color-text)",
+                backgroundColor: "var(--surface)",
+                border: "1px solid var(--border)",
+                color: "var(--foreground)",
               }}
-              itemStyle={{ color: "var(--color-text)" }}
+              itemStyle={{ color: "var(--foreground)" }}
             />
             <Legend
-              wrapperStyle={{ fontSize: 12, color: "var(--color-text-secondary)" }}
+              wrapperStyle={{ fontSize: 12, color: "var(--muted-foreground)" }}
             />
           </PieChart>
         </ResponsiveContainer>
       </div>
       <div className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-surface p-3">
         <span className="text-small text-muted-foreground">Saldo:</span>
-        <span className={`text-base font-semibold ${balance >= 0 ? "text-green-600" : "text-red-600"}`}>
+        <span className={`text-base font-semibold ${balance >= 0 ? "text-success" : "text-error"}`}>
           {formatCurrency(balance)}
         </span>
       </div>

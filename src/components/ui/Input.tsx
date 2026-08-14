@@ -12,7 +12,7 @@ interface FieldProps {
 
 function fieldClasses(hasError?: boolean) {
   return cn(
-    "block w-full rounded-input border bg-surface px-4 text-body text-foreground transition-colors duration-200 ease-out placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 disabled:opacity-60",
+    "block w-full rounded-input border bg-surface-2 px-4 text-body text-foreground transition-colors duration-200 ease-out placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 backdrop-blur-xl disabled:opacity-60",
     hasError
       ? "border-error focus:ring-error/30"
       : "border-border focus:border-primary focus:ring-primary/20"
@@ -104,7 +104,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           id={selectId}
           className={cn(
             fieldClasses(hasError || !!error),
-            "h-14 cursor-pointer appearance-none bg-surface pr-10",
+            "h-14 cursor-pointer appearance-none bg-surface-2 pr-10",
             className
           )}
           {...props}

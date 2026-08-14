@@ -22,7 +22,7 @@ const variants: Record<Variant, string> = {
   ghost:
     "text-muted-foreground hover:bg-background hover:text-foreground focus-visible:ring-primary",
   danger:
-    "bg-error text-white hover:bg-red-700 focus-visible:ring-red-500",
+    "bg-error text-white hover:bg-error/80 focus-visible:ring-error",
 };
 
 const sizes: Record<Size, string> = {

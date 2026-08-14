@@ -19,16 +19,20 @@
     <script>
       (function () {
         try {
+          var THEMES = ["v3", "v5", "v7", "v10"];
           var stored = localStorage.getItem("fp-theme");
           var prefersDark = window.matchMedia(
             "(prefers-color-scheme: dark)"
           ).matches;
+          var theme =
+            THEMES.indexOf(stored) !== -1
+              ? stored
+              : prefersDark
+                ? "v7"
+                : "v5";
           var root = document.documentElement;
-          if (stored === "aurora") {
-            root.classList.add("theme-aurora");
-          } else if (stored === "dark" || (!stored && prefersDark)) {
-            root.classList.add("dark");
-          }
+          root.classList.add(theme);
+          if (theme === "v7" || theme === "v10") root.classList.add("dark");
         } catch (e) {}
       })();
     </script>
