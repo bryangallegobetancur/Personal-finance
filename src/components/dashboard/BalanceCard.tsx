@@ -6,21 +6,22 @@ interface Props {
   income: number;
   expense: number;
   balance: number;
-  monthLabel: string;
+  periodLabel: string;
+  periodNoun?: string;
 }
 
-export function BalanceCard({ income, expense, balance, monthLabel }: Props) {
-  const suffix = monthLabel ? ` - ${monthLabel}` : "";
+export function BalanceCard({ income, expense, balance, periodLabel, periodNoun = "del mes" }: Props) {
+  const suffix = periodLabel ? ` - ${periodLabel}` : "";
   const items = [
     {
-      label: `Ingresos del mes${suffix}`,
+      label: `Ingresos ${periodNoun}${suffix}`,
       value: income,
       icon: TrendingUp,
       color: "text-success",
       bg: "bg-success/10",
     },
     {
-      label: "Gastos del mes",
+      label: `Gastos ${periodNoun}`,
       value: expense,
       icon: TrendingDown,
       color: "text-error",

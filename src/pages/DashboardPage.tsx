@@ -2,21 +2,54 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useDashboardSummary } from "@/hooks/queries/useDashboard";
 import { useAlerts } from "@/hooks/queries/useAlerts";
-import { currentMonthIso, formatMonthLabel, changeMonth, isFutureMonth } from "@/lib/utils";
+import {
+  currentMonthIso,
+  formatMonthLabel,
+  formatDate,
+  changeMonth,
+  isFutureMonth,
+  todayLocal,
+  firstDayOfMonthIso,
+  type DashboardView,
+} from "@/lib/utils";
 import { BalanceCard } from "@/components/dashboard/BalanceCard";
 import { IncomeExpenseChart } from "@/components/dashboard/IncomeExpenseChart";
 import { IncomeExpensePie } from "@/components/dashboard/IncomeExpensePie";
+import { CategoryBreakdown } from "@/components/dashboard/CategoryBreakdown";
+import { DashboardViewSwitcher } from "@/components/dashboard/DashboardViewSwitcher";
+import { DateRangePicker } from "@/components/dashboard/DateRangePicker";
 import { RecentAlerts } from "@/components/dashboard/RecentAlerts";
 import { Card } from "@/components/ui/Card";
 import { Spinner } from "@/components/ui/Spinner";
 
 export function DashboardPage() {
+  const [view, setView] = useState<DashboardView>("month");
   const [selectedMonth, setSelectedMonth] = useState(() => currentMonthIso());
-  const { data, isLoading, error } = useDashboardSummary(selectedMonth);
+  const [fromDate, setFromDate] = useState(() => firstDayOfMonthIso(currentMonthIso()));
+  const [toDate, setToDate] = useState(() => todayLocal());
+
+  const { data, isLoading, error } = useDashboardSummary(
+    view,
+    selectedMonth,
+    fromDate,
+    toDate
+  );
   useAlerts();
 
   const monthLabel = formatMonthLabel(selectedMonth);
   const canGoForward = !isFutureMonth(changeMonth(selectedMonth, 1));
+
+  const isRange = view === "range";
+  const rangeValid = fromDate && toDate && fromDate <= toDate;
+  const periodLabel = isRange
+    ? `${formatDate(fromDate)} – ${formatDate(toDate)}`
+    : monthLabel;
+  const periodNoun = isRange ? "del período" : "del mes";
+  const subtitle = isRange
+    ? "Resumen del rango de fechas seleccionado"
+    : view === "category"
+      ? "Resumen del mes en curso por categoría"
+      : "Resumen del mes en curso";
 
   const goToPrevMonth = () => setSelectedMonth((m) => changeMonth(m, -1));
   const goToNextMonth = () => {
@@ -26,14 +59,16 @@ export function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-h1 font-bold text-foreground">Dashboard</h1>
-          <p className="mt-1 text-small text-muted-foreground">
-            Resumen del mes en curso
-          </p>
+          <p className="mt-1 text-small text-muted-foreground">{subtitle}</p>
         </div>
-        <div className="flex items-center gap-1 rounded-button bg-surface p-1">
+        <DashboardViewSwitcher view={view} onChange={setView} />
+      </div>
+
+      {!isRange && (
+        <div className="flex w-fit items-center gap-1 rounded-button bg-surface p-1">
           <button
             type="button"
             onClick={goToPrevMonth}
@@ -55,7 +90,25 @@ export function DashboardPage() {
             <ChevronRight className="h-4 w-4" />
           </button>
         </div>
-      </div>
+      )}
+
+      {isRange && (
+        <DateRangePicker
+          from={fromDate}
+          to={toDate}
+          onFromChange={setFromDate}
+          onToChange={setToDate}
+        />
+      )}
+
+      {isRange && !rangeValid && (
+        <Card>
+          <p className="text-small text-error">
+            Rango de fechas no válido: la fecha "desde" debe ser anterior o igual
+            a "hasta".
+          </p>
+        </Card>
+      )}
 
       {isLoading && (
         <Card>
@@ -70,24 +123,43 @@ export function DashboardPage() {
         </Card>
       )}
 
-      {data && (
+      {data && rangeValid && (
         <>
           <BalanceCard
             income={data.total_income}
             expense={data.total_expense}
             balance={data.balance}
-            monthLabel={monthLabel}
+            periodLabel={periodLabel}
+            periodNoun={periodNoun}
           />
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <IncomeExpensePie
-              income={data.total_income}
-              expense={data.total_expense}
-              balance={data.balance}
-              monthLabel={monthLabel}
-            />
-            <div className="lg:col-span-2">
-              <IncomeExpenseChart data={data.income_vs_expense} monthLabel={monthLabel} />
-            </div>
+            {view === "category" ? (
+              <>
+                <CategoryBreakdown data={data.by_category} periodLabel={periodLabel} />
+                <div className="lg:col-span-2">
+                  <IncomeExpenseChart
+                    data={data.by_category}
+                    monthLabel={periodLabel}
+                    isDateLabel={false}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <IncomeExpensePie
+                  income={data.total_income}
+                  expense={data.total_expense}
+                  balance={data.balance}
+                  monthLabel={periodLabel}
+                />
+                <div className="lg:col-span-2">
+                  <IncomeExpenseChart
+                    data={data.income_vs_expense}
+                    monthLabel={periodLabel}
+                  />
+                </div>
+              </>
+            )}
           </div>
           <RecentAlerts />
         </>

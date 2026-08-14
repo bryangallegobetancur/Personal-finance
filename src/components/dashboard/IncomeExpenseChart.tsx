@@ -17,7 +17,13 @@ interface Datum {
   gastos: number;
 }
 
-export function IncomeExpenseChart({ data, monthLabel }: { data: Datum[]; monthLabel: string }) {
+interface Props {
+  data: Datum[];
+  monthLabel: string;
+  isDateLabel?: boolean;
+}
+
+export function IncomeExpenseChart({ data, monthLabel, isDateLabel = true }: Props) {
   return (
     <Card title={`Ingresos vs Gastos${monthLabel ? ` (${monthLabel})` : ""}`}>
       <div className="h-72 w-full">
@@ -30,7 +36,11 @@ export function IncomeExpenseChart({ data, monthLabel }: { data: Datum[]; monthL
             />
             <XAxis
               dataKey="label"
-              tickFormatter={(v: string) => v.slice(5)}
+              tickFormatter={(v: string) => (isDateLabel ? v.slice(5) : v)}
+              interval={isDateLabel ? undefined : 0}
+              angle={isDateLabel ? undefined : -18}
+              textAnchor={isDateLabel ? "end" : undefined}
+              height={isDateLabel ? 30 : 60}
               fontSize={12}
               stroke="var(--color-text-secondary)"
             />
@@ -42,7 +52,7 @@ export function IncomeExpenseChart({ data, monthLabel }: { data: Datum[]; monthL
             />
             <Tooltip
               formatter={(value: number) => formatCurrency(value)}
-              labelFormatter={(l: string) => `Fecha: ${l}`}
+              labelFormatter={(l: string) => (isDateLabel ? `Fecha: ${l}` : l)}
               contentStyle={{
                 borderRadius: 12,
                 fontSize: 12,

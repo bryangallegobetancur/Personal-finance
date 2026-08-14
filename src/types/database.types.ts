@@ -57,6 +57,7 @@ export interface DashboardSummary {
   total_expense: number;
   balance: number;
   income_vs_expense: { label: string; ingresos: number; gastos: number }[];
+  by_category: { label: string; ingresos: number; gastos: number }[];
 }
 
 // ---- Tipado de Base de Datos para el cliente tipado de Supabase ----------

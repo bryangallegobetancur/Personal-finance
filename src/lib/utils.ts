@@ -154,6 +154,32 @@ export function todayLocal() {
   return `${yyyy}-${mm}-${dd}`;
 }
 
+export function firstDayOfMonthIso(monthIso: string) {
+  const [yearStr, monthStr] = monthIso.split("-");
+  return `${yearStr}-${monthStr}-01`;
+}
+
+export function dateRangeFromMonth(monthIso: string) {
+  const [yearStr, monthStr] = monthIso.split("-");
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+  const from = `${year}-${String(month).padStart(2, "0")}-01`;
+  const nextMonth = month === 12 ? 1 : month + 1;
+  const nextYear = month === 12 ? year + 1 : year;
+  const to = `${nextYear}-${String(nextMonth).padStart(2, "0")}-01`;
+  return { from, to };
+}
+
+export function addDaysIso(dateIso: string, days: number) {
+  const [y, m, d] = dateIso.split("-").map(Number);
+  const dt = new Date(y, m - 1, d + days);
+  return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(
+    dt.getDate()
+  ).padStart(2, "0")}`;
+}
+
+export type DashboardView = "month" | "category" | "range";
+
 // ---------------------------------------------------------------------------
 // Pub/sub para reemplazar invalidateQueries de TanStack Query
 // ---------------------------------------------------------------------------
