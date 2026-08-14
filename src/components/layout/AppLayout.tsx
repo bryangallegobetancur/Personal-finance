@@ -41,9 +41,7 @@ export function AppLayout() {
     navigate("/login", { replace: true });
   };
 
-  const logoGlow = isDark
-    ? "drop-shadow-[0_0_4px_rgba(0,0,0,1.0)]"
-    : "";
+  const logoSrc = isDark ? "/Logo_white.png" : "/Logo.png";
 
   return (
     <ThemeBackground>
@@ -51,9 +49,9 @@ export function AppLayout() {
         <aside className="hidden border-r border-border bg-surface lg:flex lg:flex-col">
           <div className="flex items-center justify-center gap-2.5 px-6 py-3">
             <img
-              src="/Logo.png"
+              src={logoSrc}
               alt="Logo"
-              className={cn("h-[150px] w-[150px] rounded-button object-contain", logoGlow)}
+              className="h-[150px] w-[150px] rounded-button object-contain"
             />
           </div>
 
@@ -107,9 +105,9 @@ export function AppLayout() {
             <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-2 lg:px-8">
               <div className="flex items-center gap-2.5 lg:hidden">
                 <img
-                  src="/Logo.png"
+                  src={logoSrc}
                   alt="Logo"
-                  className={cn("h-[80px] w-[80px] rounded-button object-contain", logoGlow)}
+                  className="h-[80px] w-[80px] rounded-button object-contain"
                 />
               </div>
               <div className="hidden truncate text-small text-muted-foreground lg:block">
