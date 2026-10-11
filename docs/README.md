@@ -4,9 +4,8 @@ Este directorio reúne el material ejecutivo y técnico del proyecto **Finanzas 
 
 | Material | Contenido |
 | --- | --- |
-| [Presentación PDF](presentacion-proyecto.pdf) | Una diapositiva ejecutiva con diseño Vidrio |
-| [Presentación PowerPoint](presentacion-proyecto.pptx) | Versión editable de la misma diapositiva |
-| [Actividad y alcance](ACTIVIDAD_ABP.md) | Problema, objetivos, criterios y pendientes académicos |
+| [Presentación PDF](presentacion-proyecto.pdf) | Ocho diapositivas con diseño Vidrio |
+| [Presentación PowerPoint](presentacion-proyecto.pptx) | Versión editable de la misma presentación |
 | [Arquitectura](ARQUITECTURA.md) | Servicios, flujos, modelo de datos y límites |
 | [Despliegue](DESPLIEGUE.md) | Instalación, migraciones, Supabase y Vercel |
 | [Evidencias](EVIDENCIAS.md) | Capturas, comprobaciones y guion de demostración |

@@ -10,7 +10,7 @@ Aplicación web en la nube para registrar ingresos y gastos, consultar el balanc
 
 El registro disperso de ingresos y gastos dificulta conocer el saldo disponible y detectar excesos de presupuesto. Finanzas Personales centraliza esos movimientos en una interfaz web con categorías, gráficos y topes de gasto.
 
-El caso se basa en el producto desarrollado. Su correspondencia con una situación específica del docente, la modalidad de trabajo y el plazo deben confirmarse según [el alcance académico](docs/ACTIVIDAD_ABP.md).
+El caso se basa en el producto desarrollado. Su correspondencia con una situación específica del docente, la modalidad de trabajo y el plazo deben confirmarse con el docente.
 
 ## Funcionalidades
 
@@ -105,7 +105,6 @@ Personal-finance/
 ├── docs/                     # Entrega académica y documentación técnica
 │   ├── presentacion-proyecto.pdf
 │   ├── presentacion-proyecto.pptx
-│   ├── ACTIVIDAD_ABP.md
 │   ├── ARQUITECTURA.md
 │   ├── DESPLIEGUE.md
 │   ├── EVIDENCIAS.md
@@ -131,7 +130,7 @@ Personal-finance/
 
 ## Material para la entrega
 
-La carpeta [docs](docs/README.md) contiene la presentación de **una diapositiva en estilo Vidrio**, el análisis del problema, los diagramas y el soporte técnico. El [guion de exposición](docs/EVIDENCIAS.md#guion-de-demostracion) acompaña la diapositiva.
+La carpeta [docs](docs/README.md) contiene la presentación de **ocho diapositivas en estilo Vidrio**, el análisis del problema, los diagramas y el soporte técnico. El [guion de exposición](docs/EVIDENCIAS.md#guion-de-demostracion) acompaña la presentación.
 
 En Canvas se debe entregar únicamente este enlace:
 

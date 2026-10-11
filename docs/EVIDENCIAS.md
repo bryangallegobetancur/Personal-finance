@@ -17,7 +17,7 @@ Se revisó el código, se ejecutaron comprobaciones locales y se navegó la apli
 | Interfaz | Vidrio público capturado; cuatro temas y adaptación móvil revisados durante la mejora visual | No equivale a auditoría completa de accesibilidad |
 | `npm run lint` | Correcto con `.eslintrc.cjs` | Análisis estático de TypeScript/TSX y reglas de hooks |
 | `npm run build` | Correcto; incluye comprobación TypeScript | Advertencia de bundle superior a 500 kB |
-| Presentación | Una diapositiva PPTX y PDF en `docs` | Material ejecutivo, ampliado por los documentos técnicos |
+| Presentación | Ocho diapositivas en PPTX y PDF en `docs` | Material ejecutivo, ampliado por los documentos técnicos |
 
 No hay una suite automatizada de integración o de extremo a extremo en este repositorio. El workflow de CI ejecuta lint y build; esas verificaciones no acreditan funcionamiento del backend cloud.
 
@@ -54,7 +54,7 @@ Realizar en un proyecto de prueba administrado por el equipo. Registrar fecha, r
 
 Duración sugerida: 4 a 5 minutos, ajustable a lo que indique el docente.
 
-1. Presentar el problema y el objetivo con la diapositiva.
+1. Presentar el problema y el objetivo con la presentación.
 2. Abrir la demo pública y señalar el aviso de datos no guardados.
 3. Mostrar balance, ingresos, gastos y las vistas por categoría y rango.
 4. Crear un gasto de ejemplo y observar la actualización del balance.

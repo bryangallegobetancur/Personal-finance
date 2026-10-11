@@ -18,7 +18,7 @@ El dashboard calcula sumas y el trigger aplica reglas SQL. **No hay entrenamient
 
 ## Uso de IA durante esta entrega
 
-Se utilizó un asistente de IA para apoyar ajustes de interfaz, revisión del código, documentación y material de presentación. El fondo decorativo Vidrio de la diapositiva se generó con IA. La captura de la aplicación corresponde al modo exploración real y contiene datos de ejemplo. Los textos y el diagrama arquitectónico se construyeron a partir del código revisado.
+Se utilizó un asistente de IA para apoyar ajustes de interfaz, revisión del código, documentación y material de presentación. El fondo decorativo Vidrio de la presentación se generó con IA. La captura de la aplicación corresponde al modo exploración real y contiene datos de ejemplo. Los textos y el diagrama arquitectónico se construyeron a partir del código revisado.
 
 El equipo conserva la responsabilidad de contrastar las afirmaciones con el repositorio y de explicar las decisiones en la exposición. El uso de IA como apoyo no prueba que el producto implemente IA ni sustituye la evaluación del docente.
 
