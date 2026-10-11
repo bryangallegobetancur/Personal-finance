@@ -61,18 +61,18 @@ export function DashboardPage() {
     <div className="space-y-8">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-h1 font-bold text-foreground">Dashboard</h1>
-          <p className="mt-1 text-small text-muted-foreground">{subtitle}</p>
+          <h1 className="page-heading">Dashboard</h1>
+          <p className="mt-2 text-small text-muted-foreground">{subtitle}</p>
         </div>
         <DashboardViewSwitcher view={view} onChange={setView} />
       </div>
 
       {!isRange && (
-        <div className="flex w-fit items-center gap-1 rounded-button bg-surface p-1">
+        <div className="flex w-fit items-center gap-2 rounded-button border border-border bg-surface p-1.5">
           <button
             type="button"
             onClick={goToPrevMonth}
-            className="grid h-8 w-8 place-items-center rounded-button text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="grid h-9 w-9 place-items-center rounded-button text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
             aria-label="Mes anterior"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -84,7 +84,7 @@ export function DashboardPage() {
             type="button"
             onClick={goToNextMonth}
             disabled={!canGoForward}
-            className="grid h-8 w-8 place-items-center rounded-button text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-30"
+            className="grid h-9 w-9 place-items-center rounded-button text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-30"
             aria-label="Mes siguiente"
           >
             <ChevronRight className="h-4 w-4" />
@@ -132,11 +132,11 @@ export function DashboardPage() {
             periodLabel={periodLabel}
             periodNoun={periodNoun}
           />
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
             {view === "category" ? (
               <>
                 <CategoryBreakdown data={data.by_category} periodLabel={periodLabel} />
-                <div className="lg:col-span-2">
+                <div className="xl:col-span-2">
                   <IncomeExpenseChart
                     data={data.by_category}
                     monthLabel={periodLabel}
@@ -152,7 +152,7 @@ export function DashboardPage() {
                   balance={data.balance}
                   monthLabel={periodLabel}
                 />
-                <div className="lg:col-span-2">
+                <div className="xl:col-span-2">
                   <IncomeExpenseChart
                     data={data.income_vs_expense}
                     monthLabel={periodLabel}

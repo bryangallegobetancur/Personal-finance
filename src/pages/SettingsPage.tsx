@@ -7,8 +7,8 @@ export function SettingsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-h1 font-bold text-foreground">Configuración</h1>
-        <p className="mt-1 text-small text-muted-foreground">
+        <h1 className="page-heading">Configuración</h1>
+        <p className="mt-2 text-small text-muted-foreground">
           Gestiona tus categorías y topes de gasto.
         </p>
       </div>

@@ -25,7 +25,7 @@ const decorations = [
 export function AuthLayout() {
   return (
     <ThemeBackground>
-      <div className="relative grid min-h-screen place-items-center overflow-hidden p-4">
+      <div className="relative grid min-h-screen place-items-center overflow-hidden px-4 pb-12 pt-24 sm:px-6">
         <div className="pointer-events-none absolute inset-0 select-none">
           {decorations.map(({ Icon, className }, i) => (
             <Icon
@@ -52,7 +52,7 @@ export function AuthLayout() {
               Tu panorama financiero, claro.
             </p>
           </div>
-          <div className="rounded-card border border-border bg-surface p-10 shadow-md backdrop-blur-2xl">
+          <div className="app-card rounded-card border border-border bg-surface p-6 backdrop-blur-2xl sm:p-9">
             <Outlet />
           </div>
 

@@ -49,6 +49,7 @@ export function ThemeSelector({ className }: Props) {
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
+        aria-label={`Cambiar tema: ${active.name}`}
         className="inline-flex h-10 items-center gap-2 rounded-button border border-border bg-surface px-3 text-small font-medium text-foreground transition-all hover:shadow-sm"
       >
         <ActiveIcon className="h-4 w-4 text-primary" />
@@ -62,7 +63,7 @@ export function ThemeSelector({ className }: Props) {
         <div
           role="listbox"
           aria-label="Seleccionar tema"
-          className="absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-card border border-border bg-surface p-2 shadow-lg backdrop-blur-2xl"
+          className="absolute right-0 z-50 mt-3 w-64 max-w-[calc(100vw-2rem)] overflow-hidden rounded-card border border-border bg-overlay p-2 shadow-lg"
         >
           <p className="px-3 pb-1 pt-2 text-caption font-medium uppercase tracking-wide text-muted-foreground">
             Tema

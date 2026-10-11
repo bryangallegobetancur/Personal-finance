@@ -25,7 +25,7 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
         role="dialog"
         aria-modal="true"
         className={cn(
-          "relative z-10 w-full max-w-lg rounded-card border border-border bg-surface shadow-lg",
+          "relative z-10 max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-card border border-border bg-overlay shadow-lg",
           className
         )}
       >

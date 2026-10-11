@@ -1,6 +1,6 @@
 import { forwardRef, useState } from "react";
 import type { InputHTMLAttributes, SelectHTMLAttributes, ReactNode } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { ChevronDown, Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FieldProps {
@@ -42,7 +42,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative">
           {icon && (
-            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <span className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-muted-foreground">
               {icon}
             </span>
           )}
@@ -99,18 +99,21 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             {label}
           </label>
         )}
-        <select
-          ref={ref}
-          id={selectId}
-          className={cn(
-            fieldClasses(hasError || !!error),
-            "h-14 cursor-pointer appearance-none bg-surface-2 pr-10",
-            className
-          )}
-          {...props}
-        >
-          {children}
-        </select>
+        <div className="relative">
+          <select
+            ref={ref}
+            id={selectId}
+            className={cn(
+              fieldClasses(hasError || !!error),
+              "h-14 cursor-pointer appearance-none bg-surface-2 pr-10",
+              className
+            )}
+            {...props}
+          >
+            {children}
+          </select>
+          <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        </div>
         {hint && !error && (
           <p className="text-caption text-muted-foreground">{hint}</p>
         )}

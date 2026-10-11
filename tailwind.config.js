@@ -1,3 +1,9 @@
+// Keep opacity utilities (bg-primary/10, border-error/20, etc.) theme-aware.
+const token = (name) => ({ opacityValue }) =>
+  opacityValue === undefined
+    ? `var(--${name})`
+    : `color-mix(in srgb, var(--${name}) calc(${opacityValue} * 100%), transparent)`;
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",
@@ -17,20 +23,21 @@ export default {
           800: "#134639",
           900: "#0D3329",
         },
-        background: "var(--background)",
-        surface: "var(--surface)",
-        "surface-2": "var(--surface-2)",
-        accent: "var(--accent)",
-        foreground: "var(--foreground)",
-        "muted-foreground": "var(--muted-foreground)",
-        border: "var(--border)",
+        background: token("background"),
+        surface: token("surface"),
+        "surface-2": token("surface-2"),
+        overlay: token("overlay"),
+        accent: token("accent"),
+        foreground: token("foreground"),
+        "muted-foreground": token("muted-foreground"),
+        border: token("border"),
         primary: {
-          DEFAULT: "var(--primary)",
-          hover: "var(--primary-hover)",
-          foreground: "var(--primary-foreground)",
+          DEFAULT: token("primary"),
+          hover: token("primary-hover"),
+          foreground: token("primary-foreground"),
         },
-        success: "var(--success)",
-        error: "var(--error)",
+        success: token("success"),
+        error: token("error"),
         "ring-soft": "var(--ring-soft)",
         glow: "var(--glow)",
       },

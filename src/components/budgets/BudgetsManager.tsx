@@ -71,12 +71,12 @@ export function BudgetsManager() {
       {data && data.length > 0 && (
         <ul className="divide-y divide-border">
           {data.map((b) => (
-            <li key={b.id} className="flex items-center justify-between py-3">
+            <li key={b.id} className="flex flex-wrap items-center justify-between gap-3 py-4">
               <div className="flex items-center gap-3">
                 <span
                   className={`inline-flex h-7 items-center rounded-full px-3 text-caption font-medium ${
                     b.periodicity === "mensual"
-                      ? "bg-brand-50 text-primary dark:bg-brand-600/15"
+                      ? "bg-primary/10 text-primary"
                       : "bg-purple-50 text-purple-700 dark:bg-purple-500/15 dark:text-purple-300"
                   }`}
                 >
@@ -101,14 +101,14 @@ export function BudgetsManager() {
                 <div className="inline-flex gap-1">
                   <button
                     onClick={() => openEdit(b)}
-                    className="rounded-button p-1.5 text-muted-foreground transition-colors hover:bg-background hover:text-primary"
+                    className="rounded-button p-2 text-muted-foreground transition-colors hover:bg-background hover:text-primary"
                     aria-label="Editar"
                   >
                     <Pencil className="h-4 w-4" strokeWidth={1.75} />
                   </button>
                   <button
                       onClick={() => del.mutateAsync(b.id).catch(() => {})}
-                    className="rounded-button p-1.5 text-muted-foreground transition-colors hover:bg-background hover:text-error"
+                    className="rounded-button p-2 text-muted-foreground transition-colors hover:bg-background hover:text-error"
                     aria-label="Eliminar"
                   >
                     <Trash2 className="h-4 w-4" strokeWidth={1.75} />

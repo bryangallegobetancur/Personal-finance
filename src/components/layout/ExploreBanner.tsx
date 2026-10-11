@@ -11,10 +11,10 @@ export function ExploreBanner() {
   return (
     <div
       className={cn(
-        "flex items-center justify-between gap-3 px-4 py-2.5",
-        "bg-brand-50 text-brand-800 dark:bg-brand-950 dark:text-brand-200",
-        "border-b border-brand-200 dark:border-brand-800",
-        "text-small"
+        "flex items-center justify-between gap-2 px-4 py-2",
+        "bg-accent text-foreground",
+        "border-b border-border",
+        "text-caption"
       )}
     >
       <div className="flex items-center gap-2">
@@ -28,7 +28,7 @@ export function ExploreBanner() {
       <div className="flex items-center gap-2">
         <Link
           to="/login"
-          className="inline-flex items-center gap-1.5 rounded-button px-3 py-1.5 text-sm font-medium transition-colors hover:bg-brand-200/50 dark:hover:bg-brand-800/50"
+          className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-button px-2 py-1.5 text-caption font-medium transition-colors hover:bg-primary/10"
         >
           <LogIn className="h-4 w-4" />
           Iniciar sesión
@@ -36,7 +36,7 @@ export function ExploreBanner() {
         <button
           type="button"
           onClick={() => setDismissed(true)}
-          className="grid h-7 w-7 place-items-center rounded-full hover:bg-brand-200/50 dark:hover:bg-brand-800/50"
+          className="grid h-7 w-7 place-items-center rounded-full hover:bg-primary/10"
           aria-label="Cerrar aviso"
         >
           <X className="h-4 w-4" />

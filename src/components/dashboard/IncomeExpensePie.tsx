@@ -33,7 +33,7 @@ export function IncomeExpensePie({ income, expense, balance, monthLabel }: Props
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={55}
+              innerRadius={65}
               outerRadius={90}
               paddingAngle={4}
               dataKey="value"
@@ -48,7 +48,7 @@ export function IncomeExpensePie({ income, expense, balance, monthLabel }: Props
               contentStyle={{
                 borderRadius: 12,
                 fontSize: 12,
-                backgroundColor: "var(--surface)",
+                backgroundColor: "var(--overlay)",
                 border: "1px solid var(--border)",
                 color: "var(--foreground)",
               }}
@@ -60,7 +60,7 @@ export function IncomeExpensePie({ income, expense, balance, monthLabel }: Props
           </PieChart>
         </ResponsiveContainer>
       </div>
-      <div className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-surface p-3">
+      <div className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-border bg-surface-2 p-3">
         <span className="text-small text-muted-foreground">Saldo:</span>
         <span className={`text-base font-semibold ${balance >= 0 ? "text-success" : "text-error"}`}>
           {formatCurrency(balance)}

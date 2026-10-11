@@ -70,7 +70,7 @@ export function CategoriesManager() {
       {data && data.length > 0 && (
         <ul className="divide-y divide-border">
           {data.map((c) => (
-            <li key={c.id} className="flex items-center justify-between py-3">
+            <li key={c.id} className="flex flex-wrap items-center justify-between gap-3 py-4">
               <div className="flex items-center gap-3">
                 <span
                   className={`inline-flex h-7 items-center rounded-full px-3 text-caption font-medium ${
@@ -86,14 +86,14 @@ export function CategoriesManager() {
               <div className="inline-flex gap-1">
                 <button
                   onClick={() => openEdit(c)}
-                  className="rounded-button p-1.5 text-muted-foreground transition-colors hover:bg-background hover:text-primary"
+                  className="rounded-button p-2 text-muted-foreground transition-colors hover:bg-background hover:text-primary"
                   aria-label="Editar"
                 >
                   <Pencil className="h-4 w-4" strokeWidth={1.75} />
                 </button>
                 <button
                   onClick={() => del.mutateAsync(c.id).catch(() => {})}
-                  className="rounded-button p-1.5 text-muted-foreground transition-colors hover:bg-background hover:text-error"
+                  className="rounded-button p-2 text-muted-foreground transition-colors hover:bg-background hover:text-error"
                   aria-label="Eliminar"
                 >
                   <Trash2 className="h-4 w-4" strokeWidth={1.75} />

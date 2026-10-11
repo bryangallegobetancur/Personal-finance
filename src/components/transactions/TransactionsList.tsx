@@ -60,8 +60,8 @@ export function TransactionsList() {
             Aún no hay transacciones. Crea la primera.
           </p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-small">
+          <div className="overflow-x-auto rounded-xl border border-border">
+            <table aria-label="Movimientos" className="data-table w-full text-small">
               <thead>
                 <tr className="border-b border-border text-left text-caption uppercase text-muted-foreground">
                   <th className="py-3 pr-3 font-medium">Fecha</th>
@@ -73,13 +73,13 @@ export function TransactionsList() {
               </thead>
               <tbody className="divide-y divide-border">
                 {data.map((t) => (
-                  <tr key={t.id} className="transition-colors hover:bg-background">
+                  <tr key={t.id} className="transition-colors hover:bg-accent">
                     <td className="py-3 pr-3 text-muted-foreground">{formatDate(t.date)}</td>
                     <td className="py-3 pr-3 font-medium text-foreground">
                       {t.description}
                     </td>
                     <td className="py-3 pr-3 text-muted-foreground">
-                      {t.category?.name ?? "—"}
+                      <span className="inline-flex whitespace-nowrap rounded-full border border-border bg-surface-2 px-2.5 py-1 text-caption">{t.category?.name ?? "—"}</span>
                     </td>
                     <td
                       className={`py-3 pr-3 text-right font-semibold ${
@@ -93,21 +93,21 @@ export function TransactionsList() {
                       <div className="inline-flex gap-1">
                         <button
                           onClick={() => openClone(t)}
-                          className="rounded-button p-1.5 text-muted-foreground transition-colors hover:bg-background hover:text-success"
+                          className="rounded-button p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-success"
                           aria-label="Clonar"
                         >
                           <Copy className="h-4 w-4" strokeWidth={1.75} />
                         </button>
                         <button
                           onClick={() => openEdit(t)}
-                          className="rounded-button p-1.5 text-muted-foreground transition-colors hover:bg-background hover:text-primary"
+                          className="rounded-button p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
                           aria-label="Editar"
                         >
                           <Pencil className="h-4 w-4" strokeWidth={1.75} />
                         </button>
                         <button
                           onClick={() => del.mutateAsync(t.id).catch(() => {})}
-                          className="rounded-button p-1.5 text-muted-foreground transition-colors hover:bg-background hover:text-error"
+                          className="rounded-button p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-error"
                           aria-label="Eliminar"
                         >
                           <Trash2 className="h-4 w-4" strokeWidth={1.75} />

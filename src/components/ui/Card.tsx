@@ -10,20 +10,20 @@ export function Card({ className, title, action, children, ...props }: CardProps
   return (
     <div
       className={cn(
-        "rounded-card border border-border bg-surface shadow-sm backdrop-blur-2xl transition-shadow",
+        "app-card min-w-0 rounded-card border border-border bg-surface backdrop-blur-2xl",
         className
       )}
       {...props}
     >
       {(title || action) && (
-        <div className="flex items-center justify-between border-b border-border px-6 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-4 sm:px-6 sm:py-5">
           {title && (
-            <h3 className="text-small font-semibold text-foreground">{title}</h3>
+            <h3 className="text-[15px] font-semibold leading-6 text-foreground">{title}</h3>
           )}
           {action}
         </div>
       )}
-      <div className="p-6">{children}</div>
+      <div className="p-5 sm:p-6">{children}</div>
     </div>
   );
 }

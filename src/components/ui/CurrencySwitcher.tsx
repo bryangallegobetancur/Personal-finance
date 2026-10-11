@@ -23,7 +23,7 @@ export function CurrencySwitcher({ className }: Props) {
             className={cn(
               "rounded-button border px-4 py-2 text-small font-medium transition-all",
               currency === c.code
-                ? "border-primary bg-brand-50 text-primary dark:bg-brand-600/15"
+                ? "border-primary bg-primary/10 text-primary"
                 : "border-border bg-surface text-muted-foreground hover:text-foreground hover:shadow-sm"
             )}
           >

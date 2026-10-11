@@ -45,27 +45,28 @@ export function AppLayout() {
 
   return (
     <ThemeBackground>
-      <div className="min-h-screen lg:grid lg:grid-cols-[16rem_1fr]">
-        <aside className="hidden border-r border-border bg-surface lg:flex lg:flex-col">
-          <div className="flex items-center justify-center gap-2.5 px-6 py-3">
+      <div className="min-h-screen lg:grid lg:grid-cols-[14.5rem_minmax(0,1fr)]">
+        <aside className="app-sidebar sticky top-0 hidden h-screen flex-col border-r border-border backdrop-blur-2xl lg:flex">
+          <div className="flex flex-col items-center justify-center px-6 pb-8 pt-7">
             <img
               src={logoSrc}
-              alt="Logo"
-              className="h-[150px] w-[150px] rounded-button object-contain"
+              alt="Personal Finance"
+              className="h-24 w-24 object-contain"
             />
+            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Finanzas personales</p>
           </div>
 
-          <nav className="flex-1 space-y-1 px-3 py-4">
+          <nav aria-label="Navegación principal" className="flex-1 space-y-2 px-4 py-4">
             {items.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center gap-3 rounded-button px-3 py-2.5 text-small font-medium transition-colors duration-200 ease-out",
+                    "flex items-center gap-3 rounded-button border px-4 py-3 text-small font-medium transition-colors duration-200 ease-out",
                     isActive
-                      ? "bg-brand-50 text-primary dark:bg-brand-600/15"
-                      : "text-muted-foreground hover:bg-background hover:text-foreground"
+                      ? "border-primary/15 bg-primary/10 text-primary"
+                      : "border-transparent text-muted-foreground hover:bg-accent hover:text-foreground"
                   )
                 }
               >
@@ -99,18 +100,18 @@ export function AppLayout() {
           </div>
         </aside>
 
-        <main className="min-h-screen">
+        <main className="min-h-screen min-w-0">
           {isExplore && <ExploreBanner />}
-          <header className="sticky top-0 z-10 border-b border-border bg-surface/80 backdrop-blur">
-            <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-2 lg:px-8">
+          <header className="sticky top-0 z-20 border-b border-border bg-overlay/90 backdrop-blur-xl">
+            <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-10">
               <div className="flex items-center gap-2.5 lg:hidden">
                 <img
                   src={logoSrc}
-                  alt="Logo"
-                  className="h-[80px] w-[80px] rounded-button object-contain"
+                  alt="Personal Finance"
+                  className="h-12 w-12 object-contain"
                 />
               </div>
-              <div className="hidden truncate text-small text-muted-foreground lg:block">
+              <div className="hidden min-w-0 truncate text-small text-muted-foreground lg:block">
                 {isExplore ? "Modo exploración" : user?.email}
               </div>
               <div className="flex items-center gap-2">
@@ -126,8 +127,19 @@ export function AppLayout() {
                 <ThemeSelector />
               </div>
             </div>
+            <nav aria-label="Navegación móvil" className="grid grid-cols-3 gap-1 border-t border-border px-3 py-2 lg:hidden">
+              {items.map((item) => (
+                <NavLink key={item.to} to={item.to} className={({ isActive }) => cn(
+                  "flex min-w-0 flex-col items-center gap-1.5 rounded-button px-1 py-2 text-[11px] font-medium sm:flex-row sm:justify-center sm:gap-2 sm:text-small",
+                  isActive ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-accent"
+                )}>
+                  <item.icon className="h-4 w-4" strokeWidth={1.75} />
+                  {item.label}
+                </NavLink>
+              ))}
+            </nav>
           </header>
-          <div className="mx-auto max-w-6xl p-6 lg:p-8">
+          <div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-10 lg:py-10">
             <Outlet />
           </div>
         </main>
