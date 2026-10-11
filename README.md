@@ -169,7 +169,7 @@ propios registros del usuario.
 
 ## Licencia
 
-**[Proyecto UCN IIA](https://github.com/bryangallegobetancur/ProyectoUCNIIA)**  
+**[Personal Finance](https://github.com/bryangallegobetancur/Personal-finance)**  
 © 2026 · [Bryan Stiven Gallego Betancur, John Alejandro Alvarez Muñoz, & Daniel Santiago Naranjo Rodriguez](https://github.com/bryangallegobetancur)
 
 Esta obra está bajo la licencia **[Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es)**.
