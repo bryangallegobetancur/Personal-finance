@@ -1,182 +1,152 @@
 # Finanzas Personales
 
-App web de gestión financiera personal con **React + Vite + TypeScript + Tailwind**,
-estado/sincronización con **TanStack Query**, formularios validados con **Zod + React Hook Form**
-y backend en **Supabase (PostgreSQL + Auth + Realtime)**.
+Aplicación web en la nube para registrar ingresos y gastos, consultar el balance de un período y controlar presupuestos. Proyecto de la **Entrega 1 del Taller ABP: Proyecto y Material Técnico (20%)**.
 
-## Stack
+**[Abrir aplicación](https://personal-finance-taupe-psi.vercel.app/dashboard)** · **[Explorar sin cuenta](https://personal-finance-taupe-psi.vercel.app/explore/dashboard)** · **[Presentación PDF](docs/presentacion-proyecto.pdf)** · **[PowerPoint editable](docs/presentacion-proyecto.pptx)**
 
-| Capa | Tecnología |
-|------|-----------|
-| Frontend | React 18, Vite, TypeScript, Tailwind CSS |
-| Estado/Cache | TanStack Query (React Query) |
-| Formularios | React Hook Form + Zod (`@hookform/resolvers`) |
-| Backend | Supabase (PostgreSQL, Auth, Realtime) |
-| Gráficos | Recharts · Iconos: lucide-react · Toasts: sonner |
+![Dashboard con tema Vidrio y datos de demostración](docs/evidencias/dashboard-vidrio.png)
 
-## Puesta en marcha
+## Problema y solución
 
-1. **Dependencias**
-   ```bash
-   npm install
-   ```
-2. **Variables de entorno** — copia `.env.example` a `.env` y completa con las
-   credenciales de tu proyecto Supabase:
-   ```
-   VITE_SUPABASE_URL=https://TU-PROYECTO.supabase.co
-   VITE_SUPABASE_ANON_KEY=TU-CLAVE-ANON-PUBLICA
-   ```
-3. **Base de datos** — ejecuta el script SQL completo en el SQL Editor de
-   Supabase (o como migración con la CLI):
-   ```
-   supabase/migrations/0001_init.sql
-   ```
-   Esto crea tablas, RLS, constraints, el trigger de alertas y habilita
-   Realtime sobre `alerts_history`.
-4. **Auth** — en Supabase Dashboard > Authentication > URL Configuration, asegúrate
-   de que el redirect permitido incluya `http://localhost:5173/update-password`.
-5. **Dev server**
-   ```bash
-   npm run dev
-   ```
-6. **Typecheck / lint / build**
-   ```bash
-   npm run typecheck
-   npm run lint
-   npm run build
-   ```
+El registro disperso de ingresos y gastos dificulta conocer el saldo disponible y detectar excesos de presupuesto. Finanzas Personales centraliza esos movimientos en una interfaz web con categorías, gráficos y topes de gasto.
 
-## Estructura de carpetas
+El caso se basa en el producto desarrollado. Su correspondencia con una situación específica del docente, la modalidad de trabajo y el plazo deben confirmarse según [el alcance académico](docs/ACTIVIDAD_ABP.md).
 
-```
-Finanzas_Personales/
-├── index.html
-├── package.json
-├── vite.config.ts
-├── tsconfig.json / tsconfig.node.json
-├── tailwind.config.js
-├── postcss.config.js
-├── .env.example
-├── supabase/
-│   └── migrations/
-│       └── 0001_init.sql          # Schema, RLS, FKs, trigger de alertas, Realtime
-└── src/
-    ├── main.tsx                   # Entry: QueryClientProvider + AuthProvider + Router + Toaster
-    ├── router.tsx                 # Rutas públicas/privadas (React Router)
-    ├── index.css
-    ├── vite-env.d.ts
-    ├── lib/
-    │   ├── supabase.ts            # Cliente Supabase tipado
-    │   ├── queryClient.ts         # TanStack Query + queryKeys centralizados
-    │   ├── auth.ts                # Capa de servicios de autenticación
-    │   └── utils.ts                # cn(), formatCurrency, formatDate, currentMonthIso
-    ├── types/
-    │   └── database.types.ts      # Tipos del dominio + interfaz Database para el cliente
-    ├── schemas/                   # Validación Zod (1 por entidad)
-    │   ├── auth.schema.ts
-    │   ├── transaction.schema.ts
-    │   ├── category.schema.ts
-    │   └── budget.schema.ts
-    ├── contexts/
-    │   └── AuthContext.tsx        # Sesión + onAuthStateChange
-    ├── routes/
-    │   ├── ProtectedRoute.tsx     # Guard de rutas privadas
-    │   └── PublicRoute.tsx        # Redirige a usuarios ya logueados
-    ├── hooks/
-    │   ├── queries/               # useQuery (lecturas + Realtime)
-    │   │   ├── useProfile.ts
-    │   │   ├── useCategories.ts
-    │   │   ├── useTransactions.ts
-    │   │   ├── useBudgets.ts
-    │   │   ├── useAlerts.ts        # ← suscripción Realtime + toasts
-    │   │   └── useDashboard.ts
-    │   └── mutations/             # useMutation (escrituras + invalidación)
-    │       ├── useTransactionMutations.ts
-    │       ├── useCategoryMutations.ts
-    │       └── useBudgetMutations.ts
-    ├── components/
-    │   ├── ui/                    # Primitivas reutilizables
-    │   │   ├── Button.tsx
-    │   │   ├── Input.tsx          # Input + Select
-    │   │   ├── Card.tsx
-    │   │   ├── Modal.tsx
-    │   │   └── Spinner.tsx
-    │   ├── layout/
-    │   │   ├── AppLayout.tsx      # Sidebar + Outlet (privado)
-    │   │   └── AuthLayout.tsx     # Layout auth
-    │   ├── auth/
-    │   │   ├── LoginForm.tsx
-    │   │   ├── RegisterForm.tsx
-    │   │   ├── ForgotPasswordForm.tsx
-    │   │   ├── UpdatePasswordForm.tsx
-    │   │   └── PasswordStrength.tsx  # Validación de contraseña en tiempo real
-    │   ├── dashboard/
-    │   │   ├── BalanceCard.tsx
-    │   │   ├── IncomeExpenseChart.tsx
-    │   │   └── RecentAlerts.tsx
-    │   ├── transactions/
-    │   │   ├── TransactionsList.tsx
-    │   │   ├── TransactionForm.tsx
-    │   │   └── TransactionDialog.tsx
-    │   ├── categories/
-    │   │   ├── CategoriesManager.tsx
-    │   │   └── CategoryForm.tsx
-    │   └── budgets/
-    │       ├── BudgetsManager.tsx
-    │       └── BudgetForm.tsx
-    └── pages/
-        ├── LoginPage.tsx
-        ├── RegisterPage.tsx
-        ├── ForgotPasswordPage.tsx
-        ├── UpdatePasswordPage.tsx
-        ├── DashboardPage.tsx       # Balance + gráfico + alertas recientes
-        ├── TransactionsPage.tsx    # CRUD de transacciones
-        └── SettingsPage.tsx        # Gestión de categorías + topes
+## Funcionalidades
+
+- Autenticación, registro y recuperación de contraseña con Supabase Auth.
+- Creación, edición, clonación y eliminación de transacciones.
+- Categorías y presupuestos mensuales/anuales con vigencia opcional.
+- Dashboard por mes, categoría o rango de fechas.
+- Alertas de presupuesto mediante PostgreSQL y Supabase Realtime.
+- Modo exploración con datos de ejemplo en memoria, sin guardar cambios en la nube.
+- Diseño adaptable con cuatro temas: **Vidrio, Menta, Aurora y Profundo**.
+- Formato monetario seleccionable. Cambiar la moneda no convierte los importes.
+
+La solución no realiza pagos ni se conecta a bancos. Tampoco ejecuta modelos de IA. El [análisis de IA y ética](docs/IA_Y_ETICA.md) explica los fundamentos pertinentes, la asistencia utilizada y una aplicación futura propuesta, sin presentarla como implementada.
+
+## Arquitectura en la nube
+
+```mermaid
+flowchart LR
+  G[GitHub] -->|Integración Git y build| V[Vercel: frontend estático]
+  V -->|HTTPS| N[Navegador React]
+  N <-->|Sesión| A[Supabase Auth]
+  N -->|SDK y JWT| D[Supabase Data API]
+  D --> P[(PostgreSQL y RLS)]
+  P -->|Trigger de presupuesto| H[alerts_history]
+  H --> R[Supabase Realtime]
+  R -->|Eventos| N
 ```
 
-## Lógica de alertas (server-side)
+El navegador consulta Supabase directamente. Vercel publica los archivos estáticos de `dist`; las migraciones se aplican por separado en Supabase. [Arquitectura completa, modelo de datos y límites](docs/ARQUITECTURA.md).
 
-La verificación de tope **no depende del frontend**. Al insertar/actualizar una
-transacción de tipo `gasto`, el trigger `trg_check_budget_exceeded` (función
-`check_budget_exceeded`) ejecuta en PostgreSQL:
+| Capa | Tecnologías reales del repositorio |
+| --- | --- |
+| Interfaz | React 18, TypeScript, Vite, Tailwind CSS |
+| Estado y consultas | Contextos y hooks propios de React, eventos locales de actualización |
+| Formularios | React Hook Form, Zod y resolvers |
+| Backend administrado | Supabase Auth, PostgreSQL, Data API y Realtime |
+| Visualización | Recharts, Lucide y Sonner |
+| Entrega | GitHub, GitHub Actions y Vercel |
 
-1. Calcula el **período vigente** con `date_trunc` sobre la fecha de la
-   transacción (`'month'` para mensual, `'year'` para anual) → `[inicio, fin)`.
-2. Recorre los topes candidatos del usuario (global `category_id IS NULL` y el
-   de la categoría de la transacción).
-3. Suma los gastos del período; si superan el tope, inserta una fila en
-   `alerts_history` (con idempotencia: una alerta por budget+período).
-4. El frontend escucha `alerts_history` vía **Supabase Realtime**, invalida las
-   queries de dashboard/alertas y muestra un **toast** inmediato.
+## Instalación local
 
-## Comportamiento ON DELETE
+Requisitos: Git, Node.js 22 con npm y un proyecto Supabase del equipo.
 
-- `transactions.category_id → categories`: **ON DELETE RESTRICT** (no se puede
-  borrar una categoría con transacciones; el frontend bloquea y muestra mensaje).
-  *Justificación: preserva la integridad del histórico financiero.*
-- `budgets.category_id → categories`: **ON DELETE CASCADE** (borrar la categoría
-  elimina sus topes).
-- `alerts_history.budget_id → budgets`: **CASCADE**; `alerts_history.transaction_id → transactions`:
-  **SET NULL** (conserva el historial aunque se borre la transacción).
-- Todas las tablas hijas referencian `auth.users` con **ON DELETE CASCADE**.
+```bash
+git clone https://github.com/bryangallegobetancur/Personal-finance.git
+cd Personal-finance
+npm ci
+```
 
-## Seguridad (RLS)
+Copiar `.env.example` a `.env` y completar `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` con la URL y la clave pública del proyecto Supabase. No usar claves administrativas. Las variables `VITE_*` quedan visibles en el navegador.
 
-Todas las tablas tienen Row Level Security activado con políticas
-`auth.uid() = user_id` (o `id` en `profiles`). Cada usuario solo accede a sus
-datos. El trigger de alertas corre como `SECURITY INVOKER`, operando sobre los
-propios registros del usuario.
+En un proyecto Supabase nuevo, ejecutar en orden:
 
-## Licencia
+1. [`0001_init.sql`](supabase/migrations/0001_init.sql).
+2. [`0002_add_budget_dates.sql`](supabase/migrations/0002_add_budget_dates.sql).
+3. [`0003_relax_date_constraint.sql`](supabase/migrations/0003_relax_date_constraint.sql).
 
-**[Personal Finance](https://github.com/bryangallegobetancur/Personal-finance)**  
-© 2026 · [Bryan Stiven Gallego Betancur, John Alejandro Alvarez Muñoz, & Daniel Santiago Naranjo Rodriguez](https://github.com/bryangallegobetancur)
+Configurar en Supabase las URLs permitidas de autenticación y recuperación antes de probarlas.
 
-Esta obra está bajo la licencia **[Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es)**.
+```bash
+npm run dev
+```
 
-<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">
-  <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="Creative Commons" width="32" height="32">
-  <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="Atribución" width="32" height="32">
-  <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="No comercial" width="32" height="32">
-  <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="Compartir igual" width="32" height="32">
-</a>
+Vite muestra la dirección local, habitualmente `http://localhost:5173`. [Instrucciones completas de instalación y despliegue](docs/DESPLIEGUE.md).
+
+## Despliegue
+
+El frontend está publicado en **[personal-finance-taupe-psi.vercel.app](https://personal-finance-taupe-psi.vercel.app)**. Vercel está conectado al repositorio, según confirmó su responsable.
+
+Configuración: preset **Vite**, instalación `npm ci`, build `npm run build`, salida `dist` y las dos variables públicas de Supabase. `vercel.json` permite recargar rutas internas de la SPA. La ruta `/dashboard` requiere sesión; para evaluar la interfaz sin cuenta, usar `/explore/dashboard`.
+
+El repositorio público y el acceso web se verificaron el **11 de octubre de 2026**. La persistencia, la recuperación de contraseña y el aislamiento entre cuentas requieren completar las pruebas de integración de [Evidencias](docs/EVIDENCIAS.md).
+
+## Calidad y evidencias
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+npm run preview
+```
+
+El workflow [Calidad del proyecto](.github/workflows/ci.yml) ejecuta lint y build en GitHub Actions. El estado de una ejecución remota debe consultarse en la pestaña Actions; la presencia del archivo no demuestra que haya pasado.
+
+Las capturas públicas utilizan datos de demostración. La [matriz de verificación](docs/EVIDENCIAS.md) distingue comprobaciones realizadas de pruebas pendientes. No se afirma una mejora cuantitativa del ahorro o del tiempo de gestión, ya que no se ha realizado un estudio con usuarios.
+
+## Organización del repositorio
+
+```text
+Personal-finance/
+├── .github/workflows/ci.yml   # Comprobaciones automáticas
+├── docs/                     # Entrega académica y documentación técnica
+│   ├── presentacion-proyecto.pdf
+│   ├── presentacion-proyecto.pptx
+│   ├── ACTIVIDAD_ABP.md
+│   ├── ARQUITECTURA.md
+│   ├── DESPLIEGUE.md
+│   ├── EVIDENCIAS.md
+│   ├── IA_Y_ETICA.md
+│   ├── evidencias/            # Capturas de la demo pública
+│   └── diseno/               # Diseño vigente y antecedentes
+├── public/                   # Logo y recursos estáticos
+├── src/
+│   ├── components/           # UI y componentes por dominio
+│   ├── contexts/             # Sesión, temas, moneda y exploración
+│   ├── hooks/                # Lecturas y escrituras con hooks propios
+│   ├── lib/                  # Supabase, autenticación y utilidades
+│   ├── pages/                # Pantallas
+│   ├── routes/               # Guards de navegación
+│   ├── schemas/              # Validación de formularios
+│   └── types/                # Tipos del dominio
+├── supabase/migrations/     # Migraciones 0001, 0002 y 0003
+├── .env.example             # Plantilla sin credenciales
+├── .eslintrc.cjs
+├── vercel.json
+└── LICENSE.txt
+```
+
+## Material para la entrega
+
+La carpeta [docs](docs/README.md) contiene la presentación de **una diapositiva en estilo Vidrio**, el análisis del problema, los diagramas y el soporte técnico. El [guion de exposición](docs/EVIDENCIAS.md#guion-de-demostracion) acompaña la diapositiva.
+
+En Canvas se debe entregar únicamente este enlace:
+
+**https://github.com/bryangallegobetancur/Personal-finance**
+
+La entrega en Canvas corresponde al estudiante y no se ha realizado desde este repositorio.
+
+## Autores y licencia
+
+Autores identificados en la documentación original:
+
+- Bryan Stiven Gallego Betancur.
+- John Alejandro Alvarez Muñoz.
+- Daniel Santiago Naranjo Rodriguez.
+
+Confirmar la composición del equipo con el docente: el enunciado permite trabajo individual o en parejas según su indicación.
+
+El archivo de licencia versionado es [LICENSE.txt](LICENSE.txt), con texto **MIT**. Se conserva sin cambios. Esta referencia sustituye la declaración contradictoria de licencia que aparecía antes en el README.

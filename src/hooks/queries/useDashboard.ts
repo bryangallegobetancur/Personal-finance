@@ -117,7 +117,7 @@ export function useDashboardSummary(
       const { data: result, error: err } = await query;
       if (err) throw err;
 
-      let categoryMap: CategoryMap = {};
+      const categoryMap: CategoryMap = {};
       if (view === "category") {
         const { data: cats, error: catsErr } = await supabase
           .from("categories")
