@@ -166,3 +166,17 @@ Todas las tablas tienen Row Level Security activado con políticas
 `auth.uid() = user_id` (o `id` en `profiles`). Cada usuario solo accede a sus
 datos. El trigger de alertas corre como `SECURITY INVOKER`, operando sobre los
 propios registros del usuario.
+
+## Licencia
+
+**[Proyecto UCN IIA](https://github.com/bryangallegobetancur/ProyectoUCNIIA)**  
+© 2026 · [Bryan Stiven Gallego Betancur, John Alejandro Alvarez Muñoz, & Daniel Santiago Naranjo Rodriguez](https://github.com/bryangallegobetancur)
+
+Esta obra está bajo la licencia **[Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es)**.
+
+<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">
+  <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="Creative Commons" width="32" height="32">
+  <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="Atribución" width="32" height="32">
+  <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="No comercial" width="32" height="32">
+  <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="Compartir igual" width="32" height="32">
+</a>
